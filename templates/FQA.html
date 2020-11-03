@@ -1,0 +1,143 @@
+{% if login_user %}
+{% extends "connected_nav.html" %}
+{% else %}
+{% extends "disconnected_nav.html" %}
+{% endif %}
+
+{% block title %} FQA {% endblock %}
+{% block hello %} {{login_user['firstName']}} {% endblock %}
+{% block content %}
+
+<div class="container">
+    <br>
+    <div class="" id="accordion">
+        <div class="faqHeader">General questions</div>
+        <div class="card ">
+            <div class="card-header">
+                <h4 class="card-header">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Is it possible to lose from my participation in the tender?</a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="card-block">
+                  No, if you rate the products properly you will never get a product that you evaluate less then your item
+                </div>
+            </div>
+        </div>
+
+        <div class="card ">
+            <div class="card-header">
+                <h4 class="card-header">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Should I be afraid of the fact that other people may cheat and rate in such a way that I will be harmed by it?</a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="card-block">
+                    For each participant there is an interest in saying his true preferences in order to get the items he is interested in, any other ranking may hurt his chances.
+                </div>
+            </div>
+        </div>
+
+        <div class="card ">
+            <div class="card-header">
+                <h4 class="card-header">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">When will I receive the results of the tender?</a>
+                </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse">
+                <div class="card-block">
+                    About 24 hours after the rating time expires.
+                </div>
+            </div>
+        </div>
+
+        <div class="card ">
+            <div class="card-header">
+                <h4 class="card-header">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">If I didn't rate the products, what happens to my participation in the tender?</a>
+                </h4>
+            </div>
+            <div id="collapseFour" class="panel-collapse collapse">
+                <div class="card-block">
+                    Your product will automatically be ranked as the first preference so that you get it so even if you forgot to rate, you will never lose from your participation in the auction.
+                </div>
+            </div>
+        </div>
+
+
+    <div class="card ">
+        <div class="card-header">
+            <h4 class="card-header">
+                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">I do not receive notifications and updates from the site, what should I do?</a>
+            </h4>
+        </div>
+        <div id="collapseFive" class="panel-collapse collapse">
+            <div class="card-block">
+                Check the spam folder in the email. If this does not help please contact us.
+            </div>
+        </div>
+    </div>
+
+    <div class="card ">
+        <div class="card-header">
+            <h4 class="card-header">
+                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">If I have a question about a particular product participating in the tender, who should I contact?</a>
+            </h4>
+        </div>
+        <div id="collapseSix" class="panel-collapse collapse">
+            <div class="card-block">
+                By clicking on each product in the tender, details will appear and in addition to the product owner's email, you can ask for more information via email.
+            </div>
+        </div>
+    </div>
+
+    <div class="card ">
+        <div class="card-header">
+            <h4 class="card-header">
+                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">It's time to rate the items, but I no longer see the auction in the all tenders tab, what should I do?</a>
+            </h4>
+        </div>
+        <div id="collapseSeven" class="panel-collapse collapse">
+            <div class="card-block">
+                Once the join time ends and the ranking time begins, the auction automatically enters the my active tenders tab, in addition there is an option to save it in favorites and then it will also appear in the my favorite tenders tab.
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+
+
+<style>
+    .faqHeader {
+        font-size: 27px;
+        margin: 20px;
+    }
+
+    .panel-heading [data-toggle="collapse"]:after {
+        font-family: 'Glyphicons Halflings';
+        content: "e072"; /* "play" icon */
+        float: right;
+        color: #F58723;
+        font-size: 18px;
+        line-height: 22px;
+        /* rotate "play" icon from > (right arrow) to down arrow */
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+    }
+
+    .panel-heading [data-toggle="collapse"].collapsed:after {
+        /* rotate "play" icon from > (right arrow) to ^ (up arrow) */
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        transform: rotate(90deg);
+        color: #454444;
+    }
+</style>
+{% endblock %}

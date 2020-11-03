@@ -1,0 +1,40 @@
+{% extends "connected_nav.html" %}
+
+{% block css %}
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/fields.css') }}">
+{% endblock %}
+
+{% block title %} Edit {{current_item['name']}} {% endblock %}
+
+{% block hello %} {{fn}} {% endblock %}
+{% block content %}
+
+<div class="container">
+<br>
+<!-- enctype for upload files -->
+  <form action="/edit_item/{{current_item['_id']}}/" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="recipient-name" class="control-label">Name:</label>
+      <input type="text" class="form-control" id="input name" name="itemName" style="width=120" value="{{current_item["name"]}}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="message-text" class="control-label">Description:</label><br>
+      <textarea class="textarea" name="itemDetails" rows="4" cols="30">{{current_item["details"]}}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="image">Upload image:</label><br>
+      <input type="file" id="image" name="image" accept="image/*">
+    </div>
+
+    <button type="submit" class="btn btn-primary update" id="update item">Update item</button>
+
+    <a href="/delete_item/{{current_item['_id']}}"><button type="button" id="delete item" class="btn btn-danger">Delete</button></a>
+
+  </form>
+
+
+</div>
+
+{% endblock %}

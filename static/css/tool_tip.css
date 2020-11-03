@@ -1,0 +1,116 @@
+[data-tooltip-text]:hover {
+  position: relative;
+}
+
+[data-tooltip-text]:hover:after {
+  background-color: #E5E0E0;
+  /* background-color: rgba(1, 1, 1, 0.8); */
+  box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
+  border-radius: 5px;
+  width: 170px;
+  height: 100px;
+  color: #000000;
+  font-size: 15px;
+  content: attr(data-tooltip-text);
+  margin-bottom: 10px;
+  bottom: 130%;
+  left: 68px;
+  padding: 8px 20px 8px 20px;
+  position: absolute;
+  word-wrap: break-word;
+  z-index: 9999;
+}
+
+.help_hover {
+  /* user-select: none; */
+  display: inline-block;
+  border: 1px solid;
+  border-color: #dadada;
+  background-color: white;
+  border-radius: 20px;
+  width: 15px;
+  /* height: 15px; */
+  line-height: 15px;
+  text-align: center;
+  /* font-size: 11px; */
+  font-weight: bold;
+  margin-left: 5px;
+  cursor: default;
+}
+
+.help_hover:before {
+  content: "?";
+}
+
+.input_row {
+  font-size: 14px;
+}
+
+input#datepicker {
+  display: inline-block;
+}
+
+.pos {
+  position: relative;
+  left: 75px;
+  bottom: 10px;
+  white-space: pre;
+}
+
+[rank_toolTip_text]:hover:after {
+  background-color: #E5E0E0;
+  /* background-color: rgba(1, 1, 1, 0.8); */
+  box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
+  border-radius: 5px;
+  width: 675px;
+  height: 160;
+  color: #000000;
+  font-size: 15px;
+  content: attr(rank_toolTip_text);
+  margin-bottom: 10px;
+  top: 80px;
+  left: 68px;
+  padding: 8px 20px 8px 20px;
+  position: absolute;
+  word-wrap: break-word;
+  z-index: 9999;
+}
+
+/* item deatils while ranking */
+.imgDetailsPos{
+
+  position: relative;
+  left: 1px;
+  bottom: 1px;
+  white-space: pre;
+}
+
+.item_hover {
+  display: inline-block;
+  line-height: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+
+img.moveCursor{
+
+  margin-right: 20px;
+  position: relative;
+  right: 30px;
+}
+
+[item_toolTip_details]:hover:after{
+  border-radius: 5px;
+  width: 140px;
+  height: 30px;
+  font-size: 15px;
+  content: attr(item_toolTip_details);
+  margin-bottom: 10px;
+  top: 80px;
+  left: 68px;
+  padding: 8px 20px 8px 20px;
+  position: absolute;
+  word-wrap: break-word;
+  z-index: 9999;
+}

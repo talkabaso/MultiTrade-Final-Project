@@ -1,0 +1,80 @@
+{% if login_user %}
+{% extends "connected_nav.html" %}
+{% else %}
+{% extends "disconnected_nav.html" %}
+{% endif %}
+
+{% block css %}
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/contact-details.css') }}">
+{% endblock %}
+
+{% block title %} {{current_tender['name']}} results {% endblock %}
+
+{% block hello %} {{login_user['firstName']}} {% endblock %}
+{% block content %}
+
+{% from 'macros.html' import sendEmails %}
+
+<div class="container">
+
+  <div class="jumbotron">
+
+    <h1>The results of {{current_tender["name"]}}</h1>
+    <h6>Tender manager : {{current_tender["owner"]}} </h6>
+  </div>
+
+  <div class="thumbnail">
+    <div class="container">
+
+      {% if login_user["email"] in current_tender["participants"] %}
+      <div class="contact-details">
+        {% for i in range(items_arr1|length) %}
+        {% if items_arr1[i]["_id"] == current_tender["results"][login_user["email"]] %}
+        {% if items_arr1[i]["owner"] == login_user["email"] %}
+        <h1>You got the same item!</h1>
+        <h6>Try to exchange your item again in different tender</h6>
+
+        {% else %}
+        <h1>The item you got:</h1><br>
+        <img src="/return-file/{{items_arr1[i]['image']}}" class="img-responsive" width="90" height="90" alt="None"><br><br>
+        <h6>contact:</h6>
+        {{ items_arr1[i]["owner"] }}
+
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {%for i in range (items_arr1|length)%}
+
+  <br>
+  <div class="col-md-4 col-sm-6">
+    <div class="thumbnail">
+      <div class="container">
+        <br>
+
+        <img src="/return-file/{{items_arr1[i]['image']}}" class="img-responsive" width="90" height="90" alt="None">
+        <img
+          src="data:image/png;base64,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"
+          width="90" height="90" alt="">
+        <img src="/return-file/{{items_arr2[i]['image']}}" width="90" height="90" alt="None">
+
+        <br><br>
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+  <br><br>
+  {% if current_tender["owner"] == login_user["email"] %}
+  <button type="button" class="btn btn-primary" style="position: absolute; right: 50%;" data-toggle="modal" data-target="#sendEmailsModal" data-whatever="@getbootstrap">
+    Send email to participants <i class="fas fa-envelope"></i></button>
+  {{ sendEmails(current_tender) }}
+  {% endif %}
+
+</div>
+{% endblock%}

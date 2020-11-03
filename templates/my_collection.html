@@ -1,0 +1,63 @@
+{% extends "connected_nav.html" %}
+
+{% block css %}
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/zoom.css') }}">
+{% endblock %}
+
+
+{% block title %} {{login_user["firstName"]}}'s collection {% endblock %}
+
+{% block hello %} {{login_user["firstName"]}} {% endblock %}
+{% block content %}
+
+{% from 'macros.html' import addModal, itemDesc, flashMessage %}
+
+{{ flashMessage() }}
+
+<div class="container">
+
+  <div class="jumbotron">
+
+    <h1>My collection</h1>
+    <p>Here you can manage your items and add new items to your collection</p>
+    <p>If an exchange has occurred the item no longer will appear in your collection</p>
+  </div>
+
+  <button type="button" class="btn btn-primary" id="add item" data-toggle="modal" data-target="#addModal" data-whatever="@getbootstrap">
+    Add item <i class="fas fa-plus"></i></button>
+
+  {{ addModal() }}
+
+  <div class="row">
+
+    {% for item in items.find({'owner' : login_user["email"], 'itemReceived': None}) %}
+
+    <div class="col-md-3 col-sm-6">
+      <div class="thumbnail">
+        <!--Adds a border around an element -->
+        <div class="container">
+
+            <img src="/return-file/{{item['image']}}" class="zoomable zoom_in" width="90" height="90" alt="None" data-toggle="modal" data-target="#Modal{{item['_id']}}" data-whatever="@getbootstrap">
+
+            {{ itemDesc(item, login_user) }}
+
+          <div class="caption">
+            <!--Adds a caption text inside-->
+            <h6> {{item["name"]}} </h6>
+            {% if item["inUse"] %}
+            <a href="/out_of_tender/{{item["inTender"]}}/">Link to tender</a>
+            {% else %}
+            <a href="/edit_item/{{item['_id']}}" id="edit item">edit</a><br>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+
+  </div>
+
+</div>
+
+{% endblock %}

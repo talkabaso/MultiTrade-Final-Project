@@ -1,0 +1,72 @@
+{% extends "connected_nav.html" %}
+
+{% block css %}
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/fields.css') }}">
+{% endblock %}
+{% block title %} Personal details {% endblock %}
+
+{% block hello %} {{login_user["firstName"]}} {% endblock %}
+{% block content %}
+
+<div class="container">
+
+  <div class="jumbotron">
+
+    <h1>Edit your personal details</h1>
+    <p>Keep contact details updated</p>
+  </div>
+
+  <form action="/personal_details/" autocomplete="off" method="post">
+
+    <div class="form-group">
+      <label for="email-text">Email:
+        <input type="text" class="form-control" name="email" id="email-text" style="cursor: not-allowed;" aria-describedby="emailHelp" value="{{login_user["email"]}}" readonly>
+      </label>
+
+    </div>
+
+    <div class="form-group">
+      <div class="autocomplete">
+        <label for="state"> State: </label>
+        <input id="myInput" type="text" class="form-control" name="myState" placeholder="Choose state" autocomplete="off" value="{{login_user["state"]}}">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="container">
+
+        <div class="form-inline row">
+
+          <select data-columnNum="2" Id="phone1Prefix" name="phone1Prefix" data-fieldID="812">
+            <option class="firstChild" value="-1" selected hidden> בחר </option>
+            <option value="050">050</option>
+            <option value="051">051</option>
+            <option value="052">052</option>
+            <option value="053">053</option>
+            <option value="054">054</option>
+            <option value="055">055</option>
+            <option value="058">058</option>
+
+            {% if pref=="050" %}<option selected="selected" value="050" selected hidden>050</option>{% endif %}
+            {% if pref=="051" %}<option selected="selected" value="051" selected hidden>051</option>{% endif %}
+            {% if pref=="052" %}<option selected="selected" value="052" selected hidden>052</option>{% endif %}
+            {% if pref=="053" %}<option selected="selected" value="053" selected hidden>053</option>{% endif %}
+            {% if pref=="054" %}<option selected="selected" value="054" selected hidden>054</option>{% endif %}
+            {% if pref=="055" %}<option selected="selected" value="055" selected hidden>055</option>{% endif %}
+            {% if pref=="058" %}<option selected="selected" value="058" selected hidden>058</option>{% endif %}
+
+        </div>
+        </select>
+        <input type=tel class="form-control phoneRO" style="margin:8px;" name="phoneNum" id="phone number" value="{{login_user["phoneNum"][3:]}}" maxlength="7" placeholder="phone number ">
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+  </form>
+
+</div>
+
+<script src="{{ url_for('static', filename="js/city.js")}}"></script>
+<script src="{{ url_for('static', filename="js/registrations.js")}}"></script>
+
+{% endblock %}

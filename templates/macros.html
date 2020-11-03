@@ -1,0 +1,279 @@
+{% macro shareModal(current_tender) -%}
+
+<div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title" id="shareModalLabel">Tender: {{current_tender['name']}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <a href="" id="whats share" target="_blank" rel="noopener noreferrer"><img src="https://cdn4.iconfinder.com/data/icons/miu-square-flat-social/60/whatsapp-square-social-media-512.png" width="64" height="64"
+            style="border-radius: 10px;"></a>
+
+        <hr style="background: #ccc; border: 0; height: 2px; margin: 15px 0;">
+
+        <input dir="ltr" id="current url" title="Share url" type="text" value="" readonly="true" style="width: 300px;">
+
+        <button type="submit" class="btn btn-primary" id="copy" onclick="copyClipboard()">Copy
+          <i class="far fa-copy"></i> </button> 
+
+      </div>
+    </div>
+  </div>
+</div><br><br>
+{%- endmacro %}
+
+{%- macro changeItemModal(items, login_user, current_tender) %}
+
+<div class="modal fade" id="changeItemModal" tabindex="-1" role="dialog" aria-labelledby="changeItemLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title" id="changeItemLabel">Choose item</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+
+      <div class="row">
+
+        {% for item in items.find({'owner' : login_user["email"]}) %}
+
+        {% if item["inUse"] == False %}
+        <br>
+        <div class="col-md-4 col-sm-6">
+          <!--the screen has 12 units -->
+          <div class="thumbnail">
+            <div class="container">
+              <br>
+
+              <a href="/change_item_in_tender/{{current_tender['_id']}}/{{item['_id']}}/"><img src="/return-file/{{item['image']}}" class="zoomable" width="90" height="90" alt="None"></a>
+
+              <!--Adds a border around an element -->
+              <div class="caption">
+                <!--Adds a caption text inside-->
+                <h6>{{item["name"]}}</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% endif %}
+        {% endfor %}
+
+      </div>
+      <div class="modal-body center">
+        <a href="/collection/">Manage your collection</a>
+      </div>
+    </div>
+  </div>
+</div>
+{%- endmacro %}
+
+{%- macro addModal() %}
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title" id="addModalLabel">New item</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+      </div>
+      <div class="modal-body">
+        <form action="/collection/" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">Name:</label>
+            <input type="text" class="form-control" id="input name" name="itemName" placeholder="name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="message-text" class="control-label">Description:</label><br>
+            <textarea class="textarea" name="itemDetails" rows="7" cols="30"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="image">Upload image:</label><br>
+            <input type="file" id="image" name="image" accept="image/*" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="submit">Add item</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div><br><br>
+{%- endmacro %}
+
+{%- macro itemDesc(item,login_user) %}
+
+<div class="modal fade" id="Modal{{item['_id']}}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+
+    <div class="card" style="width: 25rem;">
+
+      <img class="card-img-top" src="/return-file/{{item['image']}}" alt="Card image cap">
+      <div class="card-body">
+        <h3 class="card-title" align="center">{{item['name']}}</h3>
+
+          {% if item['owner'] != login_user['email'] %}
+          <div class="card-header">
+          <p class="card-text" style="width:300px" >owner email: {{item['owner']}} </p>
+          </div>
+          {% endif %}
+        <p class="card-text">{{item['details']}}</p>
+
+      </div>
+    </div>
+
+  </div>
+</div><br><br>
+{%- endmacro %}
+
+{%- macro deleteTender(tender) %}
+
+<div class="modal fade" id="delete_tender{{tender["_id"]}}">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="Title{{tender["_id"]}}">Deleting tender Permanently</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3>{{tender["name"]}}</h3>
+        <p>Are you sure?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+        <form action="/delete_tender/{{tender['_id']}}/">
+          <input type="submit" value="Delete" id="delete permanently" class="btn btn-danger">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{%- endmacro %}
+
+
+
+{%- macro joinTender(items, login_user, current_tender) %}
+
+<div class="modal fade" id="joinTenderModal" tabindex="-1" role="dialog" aria-labelledby="joinTenderModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title" id="joinTenderModalLabel">Choose item</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+
+
+      <div class="row">
+
+        {% for item in items.find({'owner' : login_user["email"],'inUse' : False}) %}
+
+        <br>
+        <div class="col-md-4 col-sm-6">
+          <!--the screen has 12 units -->
+          <div class="thumbnail">
+            <div class="container">
+              <br>
+
+              <a href="/item_added_to_tender/{{current_tender['_id']}}/{{item['_id']}}/"><img src="/return-file/{{item['image']}}" id="clickable image" class="zoomable" width="90" height="90" alt="None"></a>
+
+
+              <!--Adds a border around an element -->
+              <div class="caption">
+                <!--Adds a caption text inside-->
+                <h6>{{item["name"]}}</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+
+      </div>
+      <div class="modal-body center">
+        <a href="/collection/">Manage your collection</a>
+      </div>
+    </div>
+  </div>
+</div>
+{%- endmacro %}
+
+{%- macro sendEmails(current_tender) %}
+
+<div class="modal fade" id="sendEmailsModal" tabindex="-1" role="dialog" aria-labelledby="sendEmailsModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title" id="sendEmailsModalLabel">Contact with tender's participants</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+      </div>
+      <div class="modal-body">
+        <form action="/results/{{current_tender['_id']}}/" method="post">
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">Subject:</label>
+            <input type="text" class="form-control" name="email subject" required>
+          </div>
+
+          <div class="form-group">
+            <label for="message-text" class="control-label">Content:</label><br>
+            <textarea class="textarea" name="email content" placeholder="fill your email content" rows="3" cols="30"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Send</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div><br><br>
+{%- endmacro %}
+
+
+<!-- flash messages macros -->
+
+{%- macro flashMessage(styleParam) %}
+
+
+<script type="text/javascript">
+  $(document).ready(function () {
+  setTimeout(function () {
+      $("div:visible[id*='msg']").fadeOut();
+}, 1000);
+});
+</script>
+
+<div class="container">
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category,msg in messages %}
+{% if category == 'success'%}
+  <div class="alert alert-success md-3" style="position: absolute; left: 42%;" id="msg" role="alert">{{msg}}</div>
+{% endif %}
+
+{% if category == 'error'%}
+  <div class="alert alert-danger md-3" id="msg" role="alert">{{msg}}</div>
+{% endif %}
+
+
+{% endfor %}
+{% endif %}
+{% endwith %}
+</div>
+
+{%- endmacro %}

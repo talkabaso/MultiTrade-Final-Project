@@ -1,0 +1,57 @@
+.zoomable {
+  transition: transform 0.25s ease;
+}
+
+.zoomable:hover {
+  -webkit-transform: scale(1.5);
+  transform: scale(1.5);
+}
+
+#share_url {
+  border: none;
+  padding: 0;
+  background: none;
+}
+
+.center {
+  text-align: center;
+  width: 100%;
+}
+
+.zoom_in {
+  cursor: zoom-in;
+}
+
+button {
+  margin: 8px;
+}
+
+img{
+  margin-top: 20px;
+}
+
+/* very small window */
+@media screen and (max-width: 780px){
+.favButton{
+position: relative;
+left: 100px;
+}
+}
+@media screen and (min-width: 780px) and (max-width: 990px){
+.favButton{
+position: relative;
+left: 300px;
+}
+}
+@media screen and (min-width: 990px)and (max-width: 1200px){
+.favButton{
+position: relative;
+left: 520px;
+}
+}
+@media screen and (min-width: 1200px){
+.favButton{
+position: relative;
+left: 700px;
+}
+}

@@ -1,0 +1,11 @@
+#passText {
+  display: none;
+}
+
+#private:checked~#passText {
+  display: block;
+}
+
+input[type=text] {
+  width: 250px;
+}

@@ -1,0 +1,58 @@
+{% extends "connected_nav.html" %}
+
+{% block css %}
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/contact-details.css') }}">
+{% endblock %}
+
+{% block title %} My deals {% endblock %}
+
+{% block hello %} {{login_user['firstName']}} {% endblock %}
+{% block content %}
+
+<div class="container">
+
+  <div class="jumbotron">
+
+    <h1> My previous deals</h1>
+    <p>Here you can find all the exchanges that you participated in</p>
+  </div>
+
+   <div class="container">
+   <div class="container">
+ <div class="container">
+   <div class="col-md-6 col-sm-6" >
+     <div class="row">
+       <div class="give">
+       <h3>give</h3>
+       </div>
+       <div class="got">
+       <h3>got</h3>
+     </div>
+     </div>
+   </div>
+   </div>
+ </div>
+</div>
+
+
+  {% for item in items.find({'owner': login_user['email']}) %}
+  {% if item["itemReceived"] != None %}
+  <div class="col-lg-4 col-md-4 col-sm-4">
+    <div class="thumbnail">
+      <div class="container">
+        <br>
+        <img src="/return-file/{{ items.find_one({ '_id' : item["itemReceived"]})["image"] }}/" width="90" height="90" alt="None">
+        <img src="https://i.ibb.co/vZWZ2qM/image.jpg" width="65" height="65" style="margin:8px;" alt="Exchange">
+        <img src="/return-file/{{item['image']}}/" width="90" height="90" alt="None">
+        <a href="/results/{{ items.find_one({ '_id' : item["itemReceived"]})["inTender"] }}/">move to results</a>
+        <br><br>
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
+  {% endfor %}
+
+</div>
+
+{% endblock%}

@@ -1,0 +1,184 @@
+{% extends "connected_nav.html" %}
+
+{% block css %}
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+{% block title %} MultiTrade {% endblock %}
+
+{% block hello %} {{login_user["firstName"]}} {% endblock %}
+
+{% block content %}
+
+{% from 'macros.html' import flashMessage %}
+
+{{ flashMessage() }}
+
+<div class="container">
+
+  <div class="jumbotron">
+    <h1>Welcome to MultiTrade site</h1>
+    <p>Here you can find a lot of items you may want to exchange for items that are more valuable for you</p>
+    <p>so that you will always be Satisfied because you can't lose your item to a less good item for you</p>
+
+    <h1> hello {{login_user["firstName"]}} </h1>
+
+  </div>
+
+  <div class="container">
+    <p>
+      <form action="/" method="post" class="form-inline">
+        <div class="form-group">
+          <input type="text" name="search" placeholder="search.." class="form-control">
+          <button type="submit" style="margin:8px;" class="btn btn-primary searchBtn"> Search <i class="fa fa-search" aria-hidden="true"></i></button>
+        </div>
+      </form>
+    </p>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs" id="bologna-list" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" href="#all_tenders" role="tab" aria-controls="all_tenders" aria-selected="true">all tenders</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#favorites_tenders" role="tab" aria-controls="favorites_tenders" aria-selected="false">favorites tenders</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#my_active_tenders" role="tab" aria-controls="my_active_tenders" aria-selected="false">my active tenders</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="scrollBar">
+        <div class="card-body">
+          <div class="col-xl-12 col-lg-10 col-md-7 col-sm-5 col-5 ">
+            <div class="list list-row card" id="sortable" data-sortable-id="0" aria-dropeffect="move">
+              <div class="tab-content mt-3">
+
+                <div class="tab-pane active" id="all_tenders" role="tabpanel">
+                  <div id="container" class="title">
+                    <div class="grow">Tender name</div>
+                    <div class="center grow">Active Participants</div>
+                    <div class="right grow">Last date for join</div>
+                  </div>
+
+                  {% set ns = namespace(addTerminated=false) %}
+                  {% for tender in tenders_id %}
+                  {% if tender["isActive"] and not tender["isPrivate"] %}
+                  {% set ns.addTerminated = true %}
+                  <div class="list-item" data-id="15" data-item-sortable-id="0" draggable="true" role="option" aria-grabbed="true" style="">
+                    <div><a href="/out_of_tender/{{tender['_id']}}" data-abc="true"><span class="w-40 avatar gd-primary">O</span></a></div>
+                    <div class="flex"> <a href="/out_of_tender/{{tender['_id']}}" class="item-author text-color" data-abc="true">{{tender["name"]}}</a>
+                      <div class="item-except text-muted text-sm h-1x desc">{{tender["description"]}}</div>
+                    </div>
+
+                    <div class="no-wrap">
+                    <div class="participants_field"> {{tender["participants"]|length}}</div>
+                  </div>
+
+
+                    <div class="no-wrap">
+                      <div class="item-date text-muted text-sm d-none d-md-block">{{tender["joining_time"]}}</div>
+                    </div>
+                  </div>
+
+                  {% endif %}
+                  {% endfor %}
+
+                  {% if ns.addTerminated == true %}
+                  <hr style="background: #ccc; border: 0; height: 2px; margin: 15px 0;">
+                  <h6 style="margin-left: 5px;"> Terminated tenders </h6>
+                    {% for tender in all_tenders %}
+                      {% if not tender["isActive"] and tender["results"] %}
+                      <div class="list-item" data-id="15" data-item-sortable-id="0" draggable="true" role="option" aria-grabbed="true" style="">
+                        <div><a href="/out_of_tender/{{tender['_id']}}" data-abc="true"><span class="w-40 avatar gd-terminated">T</span></a></div>
+                        <div class="flex"> <a href="/out_of_tender/{{tender['_id']}}" class="item-author text-color" data-abc="true">{{tender["name"]}}</a>
+                          <div class="item-except text-muted text-sm h-1x desc">{{tender["description"]}}</div>
+                        </div>
+
+                        <div class="participants_field"> {{tender["participants"]|length}}</div>
+                        <div class="no-wrap">
+                          <div class="item-date text-muted text-sm d-none d-md-block" style="padding-right:48px"> n/a </div>
+                        </div>
+                      </div>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+
+                </div>
+
+                <div class="tab-pane" id="favorites_tenders" role="tabpanel" aria-labelledby="favorites_tenders-tab">
+                  <div id="container" class="title">
+                    <div class="grow">Tender name</div>
+                    <div class="center grow">Active Participants</div>
+                    <div class="right grow">Last date for join</div>
+                  </div>
+
+                  {% for tender in tenders_id %}
+                  {% if tender["_id"]|string in login_user["favoritesTenders"] and not tender["results"] %}
+
+                  <div class="list-item" data-id="15" data-item-sortable-id="0" draggable="true" role="option" aria-grabbed="true" style="">
+                    <div><a href="/out_of_tender/{{tender['_id']}}" data-abc="true"><span class="w-40 avatar gd-primary">O</span></a></div>
+                    <div class="flex"> <a href="/out_of_tender/{{tender['_id']}}" class="item-author text-color" data-abc="true">{{tender["name"]}}</a>
+                      <div class="item-except text-muted text-sm h-1x" style="width:230px">{{tender["description"]}}</div>
+                    </div>
+
+                    <div class="participants_field"> {{tender["participants"]|length}}</div>
+
+                    <div class="no-wrap">
+                      <div class="item-date text-muted text-sm d-none d-md-block">{{tender["joining_time"]}}</div>
+                    </div>
+                  </div>
+
+                  {% endif %}
+                  {% endfor %}
+                </div>
+
+                <div class="tab-pane" id="my_active_tenders" role="tabpanel" aria-labelledby="my_active_tenders-tab">
+                  <div id="container" class="title">
+                    <div class="grow">Tender name</div>
+                    <div class="center grow">Active Participants</div>
+                    <div class="right grow">Last date for join</div>
+                  </div>
+
+                  {% for tender in tenders_id %}
+                  {% if login_user['email'] in tender["participants"] and not tender["results"] and tender["participants"]|length > 1 %}
+
+                  <div class="list-item" data-id="15" data-item-sortable-id="0" draggable="true" role="option" aria-grabbed="true" style="">
+                    <div><a href="/out_of_tender/{{tender['_id']}}" data-abc="true"><span class="w-40 avatar gd-primary">O</span></a></div>
+                    <div class="flex"> <a href="/out_of_tender/{{tender['_id']}}" class="item-author text-color" data-abc="true">{{tender["name"]}}</a>
+                      <div class="item-except text-muted text-sm h-1x" style="width:230px">{{tender["description"]}}</div>
+                    </div>
+
+                    <div class="participants_field"> {{tender["participants"]|length}}</div>
+
+                    <div class="no-wrap">
+                      <div class="item-date text-muted text-sm d-none d-md-block">{{tender["joining_time"]}}</div>
+                    </div>
+                  </div>
+
+                  {% endif %}
+                  {% endfor %}
+
+                </div>
+
+                <!-- show all tenders tab as default -->
+                <script type="text/javascript">
+                  $('#bologna-list a').on('click', function(e) {
+                    e.preventDefault()
+                    $(this).tab('show')
+                  })
+                </script>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

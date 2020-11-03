@@ -1,0 +1,84 @@
+{% extends "connected_nav.html" %}
+
+{% block css %}
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/sort_list.css') }}">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<script src="{{ url_for('static', filename="js/sort_list.js")}}"></script>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/tool_tip.css') }}">
+
+{% endblock %}
+
+{% block title %} {{current_tender['name']}} {% endblock %}
+
+{% block hello %} {{login_user['firstName']}} {% endblock %}
+{% block content %}
+
+
+<div class="container">
+
+  <div class="jumbotron">
+
+    {% if current_tender["participants"]|length > 1 %}
+
+    <h1>Rank the items you hope to get in: "{{current_tender['name']}}"</h1>
+      {% set daysForRanking = current_tender["daysForRanking"] %}
+    <h6>Last date for ranking: {{(current_tender['joining_time'] | addDays(daysForRanking)).strftime("%Y-%m-%d")}} </h6>
+  </div>
+
+
+  <div class="container row">
+
+    <div class="list_title">
+
+      All items:
+    </div>
+
+    <div class="wish_list list_title">
+
+      Wish list:
+    </div>
+  </div>
+
+  <form id="rankItemsForm" action="/rank_items/{{current_tender["_id"]|string}}/" method="post">
+
+    <ul id="sortable1" class="sortable_list connectedSortable">
+
+      {% for item in items.find({'inTender' : current_tender["_id"]}) %}
+
+      {% if item["owner"]!=login_user["email"]  %}
+
+
+      <li><input type="hidden" name="handles[]" value="{{item["_id"]}}" />
+         <div class="item_hover imgDetailsPos" item_toolTip_details={{item["name"]}}>
+           <img src="/return-file/{{item['image']}}" class="moveCursor" width="90" height="90" alt="None">
+         </div>
+         </li>
+
+         {% endif %}
+       {% endfor %}
+    </ul>
+
+    <ul id="sortable2" class="sortable_list connectedSortable">
+    </ul>
+
+    <button type="submit" class="btn btn-lg btn-primary right" id="submit" style="margin:5px" onclick="beforeSub()">Submit</button>
+
+  </form>
+
+  <div class="help_hover pos" rank_toolTip_text="Drag the items you want to get from the left list to the right list
+in the order you want to get them so that the top item is the first priority.
+
+* If you do not want to switch your item please leave the right list empty and click submit."></div>
+
+</div>
+
+{% else %}
+<div class="jumbotron">
+
+  <h1>There are no items to rank,You are the only user who has joined the tender</h1>
+</div>
+
+{% endif %}
+
+
+{% endblock%}

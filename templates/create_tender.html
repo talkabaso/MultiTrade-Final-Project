@@ -1,0 +1,73 @@
+{% extends "connected_nav.html" %}
+
+{% block css %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/tool_tip.css') }}">
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/private_tender.css') }}">
+
+{% endblock %}
+{% block title %} Create new tender {% endblock %}
+
+{% block hello %} {{fn}} {% endblock %}
+{% block content %}
+
+
+<div class="container">
+
+  <div class="jumbotron">
+
+    <h1>Create a new tender</h1>
+    <p>Here you can create you own tender </p>
+    <p>Choose the last day for joining, after that date the ranking items process will be available for the number of days you will choose</p>
+    <p>If you choose the tender to be private, Send the link to people you want to participate in the tender </p>
+  </div>
+
+
+  <div class="container">
+
+    <form action="/create_tender/" method="post">
+      <div class="form-group">
+        <input type="text" class="form-control" id="input name" name="tenderName" placeholder="name:" required>
+      </div>
+
+      <div class="form-group">
+        <textarea class="textarea" name="tenderDetails" placeholder="write a short description" rows="3" cols="30"></textarea>
+      </div>
+
+      <div class="form-group">
+        <div class="input_row"><label>Choose the final date for join the tender:<br>
+            <input class="date-own form-control readonly" id="datepicker" name="datepicker" style="width: 175px;" type="text" placeholder="dd/mm/yyyy" autocomplete="off" required>
+            <div class="help_hover" data-tooltip-text="Users will be allowed to join for the tender by this date no later than 12 p.m."></div>
+          </label></div>
+      </div>
+
+      <div class="form-group">
+        <div class="input_row"><label for="days">how many days for ranking:
+            <input type="number" id="daysForRanking" name="daysForRanking" min="1" max="10" value="1" oninput="validity.valid||(value='');" required>
+            <div class="help_hover" data-tooltip-text="Select the number of days to rate the items, this period will begin as soon as the joinning period ends."></div>
+          </label><br>
+        </div>
+      </div>
+
+      <input type="radio" id="chkNo" name="tender's privacy" value="public" checked>
+      <label for="chkNo">public</label><br>
+      <input type="radio" id="private" name="tender's privacy" value="private">
+      <label for="chkYes">private</label><br>
+
+      <div id="passText">
+        Tenders' password:
+        <input type="password" id="passBox" name="pass" />
+      </div>
+      <br>
+      <button type="submit" id="create tender" class="btn btn-primary">Create</button>
+
+    </form>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename="js/registrations.js")}}"></script>
+{% endblock%}

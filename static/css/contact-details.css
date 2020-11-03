@@ -1,0 +1,44 @@
+@media screen and (max-width: 800px) and (min-width: 100px){
+  .contact-details, .rank-rules {
+    visibility: hidden;
+    display: none;
+  }
+}
+
+@media screen and (min-width: 800px){
+  .contact-details {
+    box-sizing: content-box;
+    width: 300px;
+    height: 300px;
+    padding: 30px;
+    border: 2px solid black;
+    position: absolute;
+    top: 280px;
+    right: 125px;
+    border-radius: 25px;
+  }
+  .rank-rules {
+    box-sizing: content-box;
+    width: 300px;
+    height: 100%;
+    padding: 30px;
+    border: 2px solid black;
+    position: relative;
+    left: 700px;
+    bottom: 0px;
+    border-radius: 25px;
+  }
+}
+
+
+@media screen and (max-width: 1200px) and (min-width: 100px){
+.got, .give{
+  visibility: hidden;
+  display: none;
+}
+}
+@media screen and (min-width: 1200px){
+.got{
+  margin-left: 138px;
+}
+}

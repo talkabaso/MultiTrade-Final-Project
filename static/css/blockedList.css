@@ -1,0 +1,89 @@
+.padding {
+  padding: 5rem
+}
+
+.card {
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background-color: #f7f7f7;
+  background-clip: border-box;
+  border: 1px solid rgba(19, 24, 44, .125);
+  border-radius: .25rem
+}
+
+.text-color {
+  color: #5e676f
+}
+
+.text-sm {
+  font-size: .825rem
+}
+
+.scrollBar {
+  height: 300px;
+  width: 600px;
+  overflow: auto;
+}
+
+.title {
+  margin-top: 5px;
+  /* padding: 5px; */
+  display: flex;
+  flex-direction: row;
+  font-weight: bold;
+  /* width:50px; */
+}
+
+textarea {
+  position: relative;
+  top: -325px;
+}
+
+.finalDate {
+  position: relative;
+  top: -325px;
+}
+
+.daysToRank {
+  position: relative;
+  top: -325px;
+}
+
+button {
+  position: relative;
+  top: -325px;
+}
+
+@media screen and (max-width: 800px) and (min-width: 100px) {
+  .blockedList {
+    position: relative;
+    left: 280px;
+    top: -100px;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .blockedList {
+    position: relative;
+    left: 320px;
+    max-width: 0px;
+    top: -100px;
+
+  }
+}
+
+.subTitle {
+  text-decoration: underline;
+}
+
+.userType {
+  padding-left: 10px;
+}
+
+input[type=text] {
+  width: 250px !important;
+}

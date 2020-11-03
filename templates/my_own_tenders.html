@@ -1,0 +1,40 @@
+{% extends "connected_nav.html" %}
+{% block title %} {{login_user['firstName']}}'s tenders {% endblock %}
+
+{% block hello %} {{login_user['firstName']}} {% endblock %}
+{% block content %}
+
+{% from 'macros.html' import deleteTender %}
+
+<div class="container">
+
+  <div class="jumbotron">
+
+    <h1> My own tenders</h1>
+    <p>Here you can manage the tenders that you opened</p>
+  </div>
+
+  {% for tender in tenders.find({'owner' : login_user['email']}) %}
+
+  <div class="col-md-3 col-sm-6">
+    <div class="thumbnail">
+      <div class="caption">
+        <h4> {{tender["name"]}} </h4>
+
+        <a href="/out_of_tender/{{tender['_id']}}" id="tender_page"><button type="button" name="enter" class="btn btn-primary">Enter</button></a>
+        {% if tender["isActive"] %}
+        <a href="/edit_tender/{{tender['_id']}}" id="edit_tender"><button type="button" name="edit" class="btn btn-success">Edit</button></a>
+        <button type="button" class="btn btn-danger" id="delete tender" data-toggle="modal" data-target="#delete_tender{{tender["_id"]}}">Delete</button>
+
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <br>
+  {{ deleteTender(tender) }}
+
+  {% endfor %}
+
+</div>
+
+{%endblock%}

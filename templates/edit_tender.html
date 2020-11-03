@@ -1,0 +1,104 @@
+{% extends "connected_nav.html" %}
+
+{% block css %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/blockedList.css') }}">
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/tool_tip.css') }}">
+
+{% endblock %}
+{% block title %} Edit tender {% endblock %}
+
+{% block hello %} {{login_user["firstName"]}} {% endblock %}
+{% block content %}
+
+<div class="container">
+
+  <div class="jumbotron">
+
+    <h1>Edit your tender's details</h1>
+  </div>
+
+  <div class="container">
+
+    <form action="/edit_tender/{{current_tender["_id"]}}/" method="post">
+      <div class="form-group">
+        <input type="text" class="form-control" id="input name" name="tenderName" placeholder="name:" required value="{{current_tender["name"]}}">
+      </div>
+
+      <div class="blockedList">
+        <div class="card-body">
+          <div class="scrollBar">
+            <div class="col-xl-12 col-lg-10 col-md-7 col-sm-5 col-5">
+
+              <div class="card" id="sortable" data-sortable-id="0" aria-dropeffect="move">
+                <div class="title">
+                  Block users: (check V for block and then click edit button)
+                </div>
+
+                <p class="subTitle">tender's participants:</p>
+
+                {% for i in current_tender["participants"] %}
+                {% if i != current_tender["owner"] %}
+                {% if i in current_tender["blocked"] %}
+                <p class="userType">{{i}} <input type="checkbox" id={{i}} name="check[]" value={{i}} checked> </p>
+
+                {% else %}
+                <p class="userType"> {{i}} <input type="checkbox" id={{i}} name="check[]" value={{i}}></p>
+
+
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+
+                <p class="subTitle">not participates:</p>
+
+                {% for i in current_tender["blocked"] %}
+                <p class="userType">{{i}} <input type="checkbox" id={{i}} name="check[]" value={{i}} checked> </p>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <textarea class="textarea" name="tenderDetails" placeholder="write a short description" rows="3" cols="30">{{current_tender["description"]}}</textarea>
+      </div>
+
+      <div class="form-group finalDate">
+        <div class="input_row"><label>Choose the final date for join the tender:<br>
+            <input class="date-own form-control readonly" id="datepicker" name="datepicker" style="width: 175px;" type="text" placeholder="dd/mm/yyyy" autocomplete="off" required>
+            <div class="help_hover" data-tooltip-text="Users will be allowed to join for the tender by this date no later than 12 p.m."></div>
+          </label></div>
+      </div>
+
+      <div class="form-group daysToRank">
+        <div class="input_row"><label for="days">how many days for ranking:
+            <input type="number" id="daysForRanking" name="daysForRanking" value="{{current_tender["daysForRanking"]}}" min="1" max="10" value="1" oninput="validity.valid||(value='');" required>
+            <div class="help_hover" data-tooltip-text="Select the number of days to rate the items, this period will begin as soon as the joinning period ends."></div>
+          </label><br>
+        </div>
+      </div>
+
+      <br>
+      <button type="submit" class="btn btn-primary" id="edit tender submit">Edit</button> <br>
+  </div>
+</div>
+</form>
+
+<script type="text/javascript">
+  $(".date-own").datepicker({
+      format: 'dd/mm/yyyy',
+      autoclose: true,
+      todayHighlight: true
+    })
+.datepicker("update", new Date({{current_tender["joining_time"].year}}, {{current_tender["joining_time"].month - 1}}, {{current_tender["joining_time"].day}}));
+</script>
+
+<script src="{{ url_for('static', filename="js/registrations.js")}}"></script>
+
+{% endblock%}

@@ -1,0 +1,88 @@
+{% extends "disconnected_nav.html" %}
+
+{% block css %}
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/fields.css') }}">
+
+{% endblock %}
+
+{% block title %} Registration {% endblock %}
+{% block content %}
+
+<div class="container">
+  <div class="alert alert-secondary" role="alert">
+    <h1>Welcome to Registration page</h1>
+    <p> Please register in order to participate in the exchanging processes</p>
+  </div>
+
+  <form action="/register/" method="post" onsubmit="return checkValidation({{allEmails}})">
+
+    <div class="form-group">
+      <input type="text" class="form-control" name="fn" id="first name" aria-describedby="emailHelp" placeholder="first name* " required>
+    </div>
+
+    <div class="form-group">
+      <input type="text" class="form-control" name="ln" id="last name" aria-describedby="emailHelp" placeholder="last name* " required>
+    </div>
+
+    <div class="form-group">
+      <input type="email" class="form-control" name="email" id="input email" aria-describedby="emailHelp" placeholder="email* " required>
+      <small id="emailHelp" class="form-text text-muted">important to enter a valid email in order to stay updated.</small>
+    </div>
+
+    <div class="form-group">
+
+      <div class="form-inline row">
+        <div class="form-group col-sm-6">
+
+          <input type="password" class="form-control" name="pass" id="input password" style="margin-right:8px;" minlength="6" maxlength="12" placeholder="password* " onkeyup='check();' required>
+          <small id="emailHelp" class="form-text text-muted">Minimum of 6 characters</small>
+
+        </div>
+
+        <div class="form-group col-sm-6">
+
+          <input type="password" class="form-control" name="confirmPass" id="confirm password" minlength="6" maxlength="12" placeholder="confirm password* " onkeyup='check();' required>
+          <span id='message'></span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <div class="autocomplete">
+        <label for="state"> State: </label>
+        <input id="myInput" type="text" class="form-control" name="myState" autocomplete="off" placeholder="Choose state">
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="form-group">
+        <div class="form-inline row">
+
+          <select data-columnNum="2" data-ispublishable="1" data-smsconf="1" data-isRequired="0" Id="phone1Prefix" data-isMobilePrefixes="1" name="phone1Prefix" data-defaultValue="050" data-showOnLoad="1" data-fieldID="812">
+            <option value="050" data-selected="selected">050</option>
+            <option value="051">051</option>
+            <option value="052">052</option>
+            <option value="053">053</option>
+            <option value="054">054</option>
+            <option value="055">055</option>
+            <option value="058">058</option>
+          </select>
+          <input type="text" class="form-control phoneRO" style="margin:8px;" name="phoneNum" id="phone number" maxlength="7" placeholder="phone number" autocomplete="off" onkeypress="return isNumber(event)">
+        </div>
+      </div>
+    </div>
+
+    <a href="/login/">Already registered?</a><br><br>
+
+    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+  </form>
+
+</div>
+
+<script src="{{ url_for('static', filename="js/city.js")}}"></script>
+<script src="{{ url_for('static', filename="js/registrations.js")}}"></script>
+
+{% endblock %}

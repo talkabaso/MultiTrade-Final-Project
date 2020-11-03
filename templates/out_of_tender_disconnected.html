@@ -1,0 +1,70 @@
+{% extends "disconnected_nav.html" %}
+
+{% block css %}
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/zoom.css') }}">
+{% endblock %}
+
+{% block title %} {{current_tender['name']}} {% endblock %}
+
+{% block content %}
+
+{% from 'macros.html' import shareModal %}
+
+<div class="container">
+
+  <div class="jumbotron">
+
+    <h1>{{current_tender['name']}}</h1>
+    <p>Manager: {{current_tender["owner"]}} </p>
+    <div style="overflow-wrap:break-word">
+      <p>{{current_tender['description']}}</p>
+    </div>
+
+    {% set daysForRanking = current_tender["daysForRanking"] %}
+    <h5> last date for joining: {{(current_tender['joining_time']).strftime("%Y-%m-%d")}}</h5>
+    {% if daysForRanking == 1 %}
+    <h5> The ranking process will start at: {{(current_tender['joining_time'] | addDays(1)).strftime("%Y-%m-%d")}} and will end at the end of this day</h5>
+    {% else %}
+    <h5> The ranking process will start at: {{(current_tender['joining_time'] | addDays(1)).strftime("%Y-%m-%d")}} and will end at: {{(current_tender['joining_time'] | addDays(daysForRanking)).strftime("%Y-%m-%d")}}</h5>
+
+    {% endif %}
+
+  </div>
+
+  <div class="container">
+
+
+    <a href="/login/"> <button type="button" class="btn btn-primary" id="select item"> Join <i class="fas fa-plus"></i></button></a>
+
+    <button type="button" id="share_url" data-toggle="modal" data-target="#shareModal" data-whatever="@getbootstrap">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAoklEQVR42mNgmGnMQAZ2AOKZQPwAimdCxRBqyDT0DBD/R8NnUAwnw+CZWAyF4ZmUGPwAj8EPBp3BzkB
+            8mdSgwBfTMkC8EsmAW8RGHq6YPgu14DOUD6IrgNiF2OSGL6ZheDUQyxEdbEREyCcgdiU5kkmKaTIMxhcUlylxMa7Iu0VpGONKbqDYL6ckVRDCZKdjmua84VkI0bQ8plkNQrM6jygMAPbbJ6MGdtX+AAAAAElFTkSuQmCC" border="0" height="22" width="22" data-atf="1"></button>
+
+      {{ shareModal(current_tender) }}
+
+    <div class="row">
+
+      {% for item in items.find({'inTender' : current_tender["_id"]}) %}
+
+      <br>
+      <div class="col-md-3 col-sm-6">
+        <div class="thumbnail">
+          <div class="container">
+            <br>
+
+            <img src="/return-file/{{item['image']}}" class="zoomable zoom_in" width="90" height="90" alt="None">
+
+            <div class="caption">
+              <h6>{{item["name"]}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename="js/current_url.js")}}"></script>
+
+{% endblock%}
