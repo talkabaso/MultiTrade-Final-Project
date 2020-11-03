@@ -33,9 +33,9 @@ if you are lucky, you will receive an item you wanted and in the worst case you 
 
 # Requirements to install and run the project locally
 + Python version 3.8 and above.
-+ [To run the project locally](https://github.com/aricRach/final-project/blob/master/tutorials/For%20local%20use.pdf)
++ [To run the project locally](https://github.com/talkabaso/MultiTrade-Final-Project/blob/master/tutorials/For%20local%20use.pdf)
 
-+ To learn more about our project, please click [here](https://github.com/aricRach/final-project/blob/master/EX/final%20presentation.pptx)
++ To learn more about our project, please click [here](https://github.com/talkabaso/MultiTrade-Final-Project/blob/master/EX/final%20presentation.pptx)
 
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Flask_logo.svg" width="160" height="100" >  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR4Vx1dLENnSr9Ic8j8DYn6htodsJ8O-txerw&usqp=CAU" width="160" height="100" >  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRkjyiljkv4CXJgBwxBhKn99dR72f0_wYWZ6A&usqp=CAU" width="260" height="120"> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQmyUP-wq_7VSFviHOH617pWoGkSNy6Ms9Q7A&usqp=CAU" width="180" height="100">
